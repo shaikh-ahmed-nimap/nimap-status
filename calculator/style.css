@@ -1,0 +1,44 @@
+*, *::after, *::before {
+    margin: 0; 
+    padding: 0;
+    box-sizing: border-box;
+  }
+  html, body {
+    height: 100%;
+    width: 100%;
+  }
+  
+  .container {
+    margin: 2rem auto;
+    max-width: 400px;
+  }
+  
+  .display-container {
+    display: flex;
+    flex-direction: column;
+  }
+  .display-container input {
+    border: none;
+    background-color: lightgrey;
+    padding: 10px 12px;
+  }
+  
+  .button-row {
+    width: 100%;
+    display: flex;
+  }
+  
+  .button-row > input {
+    flex: 1;
+    padding: 0.3rem 0;
+    margin: 5px 5px;
+    border: none;
+    outline: none;
+    background-color: lightgray;
+  }
+  
+  
+  
+  
+  
+  
