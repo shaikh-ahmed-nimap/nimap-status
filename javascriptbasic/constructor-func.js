@@ -92,5 +92,7 @@ const video = {
     }
 }
 
-video.show();
+// video.show();
 
+let t = new Date()
+console.log(t.constructor)
