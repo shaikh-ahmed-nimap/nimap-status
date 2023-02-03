@@ -1,0 +1,41 @@
+-- ROUNDS TO CLOSEST INTEGER NUMBER
+SELECT ROUND(2.692345, 1);
+-- RETURNS DECIMAL WITH GIVEN NUMBER WITHOUT ROUNDING IT
+SELECT TRUNCATE(2.692345, 0);
+
+-- RETURNS EQUAL TO OR GREATER THAN TO PROVIDED NUMBER
+SELECT CEILING(4.001);
+
+-- To generate random floatin number
+SELECT RAND();
+
+-- STRING FUNCTION 
+SELECT LOWER('SKY');
+
+SELECT LENGTH('NUMBER');
+
+SELECT TRIM('           try                ');
+
+SELECT RIGHT('KINDERGARDEN', 6);
+
+select substring('every thing you need to know', 3, 6);
+
+SELECT LOCATE('q', 'some random product');
+
+--  DATE FUNCTION
+SELECT NOW();
+
+SELECT CURTIME();
+
+SELECT dayname(NOW());
+
+SELECT EXTRACT(MONTH FROM NOW());
+
+select TIME(NOW());
+USE sql_store;
+SELECT * FROM orders WHERE YEAR(order_date) = YEAR(NOW());
+
+SELECT date_format(NOW(), '%D %M %Y');
+SELECT date_format(NOW(), '%d-%m-%Y')
+
+SELECT DATE_ADD(Now(),INTERVAL 1 YEAR);
