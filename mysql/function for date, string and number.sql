@@ -39,3 +39,5 @@ SELECT date_format(NOW(), '%D %M %Y');
 SELECT date_format(NOW(), '%d-%m-%Y')
 
 SELECT DATE_ADD(Now(),INTERVAL 1 YEAR);
+
+SELECT TIME_TO_SEC('13:00');
