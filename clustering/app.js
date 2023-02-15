@@ -5,3 +5,5 @@ const app = http.createServer((req, res) => {
         res.end('hello world!!')
     }
 })
+
+module.exports = app;

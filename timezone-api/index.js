@@ -16,7 +16,7 @@ console.log(process.env.NODE_ENV)
 console.log(app.get('env'))
 
 app.get('/api/zones', async (req, res) => {
-    const {city} = req.query
+    const city = req.query.city
     try {
         if (city && city !== '') {
             if (!zones[city]) {
@@ -39,5 +39,6 @@ app.get('/api/zones', async (req, res) => {
 const PORT = 5000;
 
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`))
+
 
 

@@ -78,3 +78,7 @@ function calculate (operator, prev, curr) {
       break;
   }
 }
+
+(function () {
+  console.log('hello')
+})()
