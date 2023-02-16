@@ -177,7 +177,7 @@ function missingValueInArrya(arr = []) {
 //     console.log(ans)
 // }
 
-// missingValueInArrya([1, 2, 3, 5, 6])
+missingValueInArrya([1, 2, 3, 5, 6, 8, 10])
 
 function findPair (arr, sum) {
     let result = []
@@ -192,4 +192,71 @@ function findPair (arr, sum) {
     return result;
 }
 
-console.log(findPair([80, 60, 10, 50, 30, 100, 0, 50], 100));
+// console.log(findPair([80, 60, 10, 50, 30, 100, 0, 50], 100));
+
+// Find Even number
+function findEvenNumber (arr) {
+    const result = []
+    for (let num of arr) {
+        if (num % 2 === 0) {
+            result.push(num)
+        }
+    }
+    return  result;
+}
+
+// console.log(findEvenNumber([20, 30, 10, 35, 45, 60]))
+
+function findDuplicate (arr) {
+    const obj = {};
+    const result = [];
+    for (let num of arr) {
+        if (obj[num]) {
+            obj[num] += 1
+        } else {
+            obj[num] = 1;
+        }
+    }
+    for (let key in obj) {
+        if (obj[key] > 1) {
+            result.push(Number(key))
+        }
+    }
+    return result;
+};
+
+// console.log(findDuplicate([1, 1, 2, 5, 60, 5, 33]))
+
+function findDuplicateSec (arr) {
+    const result = []
+    for (let i = 0; i < arr.length; i++) {
+        for (let j = i + 1; j < arr.length; j++) {
+            if (arr[i] === arr[j] && result.indexOf(arr[i] === -1)) {
+                result.push(arr[i])
+            }
+        }
+    }
+    return result;
+}
+
+// console.log(findDuplicateSec([1, 1, 2, 5, 60, 5, 33]))
+
+
+function stringSol (s) {
+    let num = [];
+    let str = [];
+    for (let i = 0; i < s.length; i++) {
+        let number = '';
+        if (isNaN(s[i])) {
+            str.push(s[i])
+        } else {
+            if (!isNaN(s[i])) {
+                number += s[i]
+            }
+            num.push(number)
+        }
+    }
+    console.log(num, str)
+}
+
+stringSol('a2b4c10d8');
