@@ -17,17 +17,12 @@ app.use(session({
 }))
 
 app.use(express.urlencoded({extended: false}));
-
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/', (req, res) => {
-    console.log(req.user)
-    res.send('Hello World!');
-});
-
+app.use(express.static('public'))
 app.use('/v1/api', userRouter);
 
-const PORT = process.env.PORT || 5000;
+const PORT = 5000;
 
 app.listen(PORT, () => {console.log(`server listening on port ${PORT}`)});

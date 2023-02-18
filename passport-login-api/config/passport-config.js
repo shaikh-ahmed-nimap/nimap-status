@@ -9,15 +9,15 @@ function initializePassport (passport) {
             session: true
         }, 
         async (email, password, done) => {
+            console.log('running strategy')
             try {
                 const user = await User.findOne({where: {email: email}});
-                console.log(user)
                 if (!user) {
-                    return done(null, false, {message: 'invalid email or password'})
+                    return done('Invalid email or password', false)
                 }
                 const isMatch = await user.verifyPassword(password, user.password);
                 if (!isMatch) {
-                    return done(null, false, {message: 'invalid username or password'});
+                    return done('Invalid email or password', false);
                 }
                 return done(null, user);
             }

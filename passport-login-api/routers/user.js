@@ -2,22 +2,12 @@ const {Router} = require('express');
 const passport = require('passport');
 const User = require('../models/User');
 const checkAuth = require('../middlewares/isAuthenticated');
+const upload = require('../config/multerConf');
 
 const router = Router();
 
-router.post('/login', passport.authenticate('local', {
-    failureMessage: true
-}), async (req, res) => {
-   try {
-        if(req.isAuthenticated()) {
-            res.send('user logged in suceesfull')
-        } else {
-            res.send('info')
-        }
-   } catch (e) {
-    console.log(e);
-    res.send('something went wrong')
-   } 
+router.post('/login', passport.authenticate('local'), async(req, res) => {
+    res.send('success yey')
 })
 
 router.post('/logout', async (req, res, next) => {
@@ -34,8 +24,6 @@ router.post('/register', async (req, res) => {
     const body = req.body;
     try {
         const user = User.build(body);
-        const hashedPass = await user.hashPassword(user.password);
-        user.password = hashedPass
         await user.save()
         res.status(201).json({message: "user created"})
     } catch (e) {
@@ -66,13 +54,31 @@ router.post('/register', async (req, res) => {
 
 router.get('/current', checkAuth, async (req, res) => {
     try {
-        const user = await User.findOne({select: ['id', 'name', 'email'], where: {id: req.user.id}})
+        const user = await User.findOne({attributes: ['id', 'name', 'email'], where: {id: req.user.id}})
         res.status(200).json(user)
     }
     catch(e) {
         console.log(e);
         return res.send('somethign went wrong')
     }
-})
+});
+
+router.patch('/upload', checkAuth, upload.single('profile_pic'), async (req, res) => {
+    const user = req.user;
+    console.log(user)
+    try {
+        const user = await User.findOne({where: {email: req.user.email}});
+        if (!user) {
+            res.send('no user found');
+            return;
+        }
+        user.img = req.file.filename;
+        await user.save();
+        res.send('success')
+    } catch (e) {
+        console.log(e);
+        res.status('something went wrong');
+    }
+});
 
 module.exports = router;
