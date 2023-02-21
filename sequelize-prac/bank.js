@@ -83,28 +83,28 @@ const Captain = sequelize.define('captain', {
 
 Ship.belongsTo(Captain, {targetKey: 'name', foreignKey: 'captainName'});
 
-const Foo = sequelize.define('foo', {
-    name: {
-        type: DataTypes.STRING,
-        unique: true
-    }
-}, {timestamps: false})
+// const Foo = sequelize.define('foo', {
+//     name: {
+//         type: DataTypes.STRING,
+//         unique: true
+//     }
+// }, {timestamps: false})
 
-const Bar = sequelize.define('bar', {
-    name: {
-        type: DataTypes.STRING,
-        unique: true
-    }
-}, {timestamps: false});
+// const Bar = sequelize.define('bar', {
+//     name: {
+//         type: DataTypes.STRING,
+//         unique: true
+//     }
+// }, {timestamps: false});
 
-const Baz = sequelize.define('baz', {
-    name: {
-        type: DataTypes.STRING
-    }
-}, {timestamps: false})
+// const Baz = sequelize.define('baz', {
+//     name: {
+//         type: DataTypes.STRING
+//     }
+// }, {timestamps: false})
 
-Foo.hasOne(Bar, {sourceKey: 'name', foreignKey: 'foo_name'});
-Bar.hasMany(Baz, {sourceKey: 'name', foreignKey: 'bar_name'});
+// Foo.hasOne(Bar, {sourceKey: 'name', foreignKey: 'foo_name'});
+// Bar.hasMany(Baz, {sourceKey: 'name', foreignKey: 'bar_name'});
 
 
 
@@ -112,7 +112,7 @@ Bar.hasMany(Baz, {sourceKey: 'name', foreignKey: 'bar_name'});
 let captain;
 let ship;
 
-sequelize.sync()
+sequelize.sync({alter: true})
     // .then(() => {
     //     return Captain.create({name: "Jack Sparrow"});
     // })
@@ -134,7 +134,10 @@ sequelize.sync()
     //     console.log(result.toJSON())
     // })
     .then(() => {
-        console.log('yes')
+        return Ship.findAndCountAll({include: [{model: Captain, where: {name: 'Jack Sparrow'}}]})
+    })
+    .then((ships) => {
+        console.log(ships.rows.map(ship => console.log(ship.toJSON())))
     })
     .catch(err => {
         console.log(err)

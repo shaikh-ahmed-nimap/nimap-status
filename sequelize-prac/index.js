@@ -1,5 +1,5 @@
 
-
+const {DataTypes, Op} = require('sequelize');
 const sequelize = require('./db');
 
 const User = sequelize.define('User', {
@@ -14,7 +14,7 @@ const User = sequelize.define('User', {
         unique: true
     }
 }, {
-    timestamps: false
+    paranoid: true
 })
 
 const Profile = sequelize.define('Profile', {
@@ -85,8 +85,8 @@ const PostHasTags = sequelize.define('PostHasTags', {
     }
 })
 
-User.hasOne(Profile, {onDelete: 'CASCADE'});
-Profile.belongsTo(User, {foreignKey: 'user_id'});
+User.hasOne(Profile, {onDelete: 'CASCADE',foreignKey: 'user_id'});
+Profile.belongsTo(User);
 
 User.hasMany(Post);
 Post.belongsTo(User, {foreignKey: 'user_id'});
@@ -141,13 +141,95 @@ Tag.belongsToMany(Post, {through: PostHasTags});
 let user;
 let profiles;
 let post;
-// sequelize.sync({force:true})
-//     .then(() => {
-//         return User.findOne({where: {user_id: 1}});
-//     })
+sequelize.sync({alter: true})
+    // .then(() => {
+    //     return User.bulkCreate([
+    //                 {
+    //                     username: 'user1',
+    //                 },
+    //                 {
+    //                     username: 'user2',
+    //                 },
+    //                 {
+    //                     username: 'user3',
+    //                 },
+    //                 {
+    //                     username: 'user4',
+    //                 },
+    //                 {
+    //                     username: 'user5',
+    //                 },
+    //                 {
+    //                     username: 'user6',
+    //                 },
+    //                 {
+    //                     username: 'user7',
+    //                 },
+    //                 {
+    //                     username: 'user8',
+    //                 },
+                
+    //             ]);
+    // })
+    // .then(() => {
+        
+    //     return User.findOne({where: {user_id: 1}})
+    // })
+    // .then((returnUser) => {
+    //     user = returnUser;
+    //     return Post.create({title: "user 1 post", body: "user1 posted a post"})
+    // })
+    // .then((post) => {
+    //     return post.setUser(user)
+    // })
+    // .then(() => {
+    //     return Post.findOne({where: {post_id: 2}})
+    // })
+    // .then((returnedPost) => {
+    //     post = returnedPost;
+    //     return Tag.bulkCreate([
+    //         {tag_name: "tag1"},
+    //         {tag_name: "tag2"},
+    //         {tag_name: "tag3"},
+    //         {tag_name: "tag4"},
+    //     ])
+    // })
+    // .then((tags) => {
+    //     return tags.forEach(tag => {
+    //         post.addTag(tag)
+    //     })
+    // })
+    // .then(() => {
+    //     return User.findAll({include: {
+    //         model: Post,
+    //         include: {
+    //             model: Tag
+    //         }
+    //     }})
+    // })
+    .then(() => {
+        return User.findAll({
+            include: [
+                {
+                    model: Post,
+                    include: [
+                        {
+                            model: Tag,
+                            where: {tag_name: 'tag2'}
+                        }
+                    ]
+                }
+            ]
+        })
+    })
+    .then(result => {
+        console.log(result.map(user => console.log(user.toJSON())))
+    })
     // .then((data) => {
-    //     user = data;
-    //     return Profile.findOne({where: {profile_id: 1}});
+    //     return data.destroy();
+    // })
+    // .then(result => {
+    //     return result.restore();
     // })
     // .then((profile) => {
     //     user.setProfile(profile);
@@ -201,6 +283,6 @@ let post;
     //    console.log(result.map(data => data.toJSON()))
 
     // })
-    // .catch(err => {
-    //     console.log('something went wrong', err);
-    // })
+    .catch(err => {
+        console.log('something went wrong', err);
+    })
