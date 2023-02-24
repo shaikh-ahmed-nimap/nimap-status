@@ -3,6 +3,8 @@ const {
   Model
 } = require('sequelize');
 const bcrypt = require('bcrypt');
+const crypto = require('node:crypto');
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     async hashPassword (password) {
@@ -10,11 +12,15 @@ module.exports = (sequelize, DataTypes) => {
       const hashedPassword = await bcrypt.hash(password, salt);
       return hashedPassword;
     }
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+
+    async createResetToken () {
+      const resetToken = crypto.randomBytes(10).toString('hex');
+      this.passwordResetToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+      this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+      console.log({passwordResetExpires: this.passwordResetExpires}, {passwordResetToken: this.passwordResetToken}, {resetToken})
+      return resetToken;
+    }
+
     static associate(models) {
       // define association here
     }
@@ -39,7 +45,14 @@ module.exports = (sequelize, DataTypes) => {
     },
     role: {
       type: DataTypes.ENUM,
-      values: ['user', 'admin']
+      values: ['user', 'admin'],
+      defaultValue: 'user'
+    },
+    passwordResetToken: {
+      type: DataTypes.STRING
+    },
+    passwordResetExpires: {
+      type: DataTypes.DATE
     }
   }, {
     sequelize,
