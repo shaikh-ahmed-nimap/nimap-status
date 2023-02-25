@@ -8,7 +8,7 @@ const errorHandler = (err, req, res, next) => {
     if (err.name === 'UnAuthorizedError') {
         return res.status(err.status).json({status: 'fail', data: err.message})
     }
-    return res.status(500).json({status: "fail", message: 'something went wrong'});
+    return res.status(err.status).json({status: "fail", message: err.message});
 }
 
 module.exports = errorHandler;

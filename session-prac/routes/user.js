@@ -1,6 +1,6 @@
 const {Router} = require('express');
-const {asyncWrapper, authenticate} = require('../middlewares');
-const {register, login, current, changePassword, forgotPassword, resetPassword} = require('../controllers/user');
+const {asyncWrapper, authenticate, haveAuth} = require('../middlewares');
+const {register, login, current, changePassword, forgotPassword, resetPassword, logout, deleteUser} = require('../controllers/user');
 const {userValidators} = require('../validators')
 
 const router = Router();
@@ -18,5 +18,9 @@ router.route('/current').get(authenticate, current).post(authenticate, changePas
 router.route('/forgot-password').post(forgotPassword);
 
 router.route('/reset-password/:token').patch(resetPassword);
+
+router.route('/logout').delete(authenticate, logout);
+
+router.route('/delete/:userId').delete(authenticate, haveAuth, deleteUser);
 
 module.exports = router;

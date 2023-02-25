@@ -1,7 +1,7 @@
 const crypto = require('node:crypto');
 const {asyncWrapper} = require('../middlewares');
 const {User} = require('../models');
-const {ValidationError, ServerError} = require('../errors');
+const {ValidationError, ServerError, NotFoundError} = require('../errors');
 const bcrypt = require('bcrypt');
 const {sendMail} = require('../utils');
 const { Op } = require('sequelize');
@@ -130,4 +130,32 @@ module.exports.resetPassword = asyncWrapper(async (req, res, next) => {
     user.passwordResetExpires = null;
     await user.save();
     return res.status(200).json({status: 'success', message: 'Password reset success'});
+});
+
+module.exports.logout = asyncWrapper(async (req, res, next) => {
+    try {
+        req.session.destroy();
+        return res.status(200).json({message: "logout success"})
+    } catch (e) {
+        console.log(e);
+        const err = new ValidationError('validation error', [{error: e.message}]);
+        return next (err);
+    }
+});
+
+module.exports.deleteUser = asyncWrapper(async (req, res, next) => {
+    try {
+        const {userId} = req.params;
+        const user = await User.findOne({where: {id: userId}});
+        if (!user) {
+            const err = new NotFoundError('User with id not found');
+            return next(err);
+        }
+        await user.destroy();
+        req.session.destroy();
+        return res.status(200).json({message: "User deleted"});
+    } catch (err) {
+        const e = new ServerError(err.message);
+        return next(e);
+    }
 })
