@@ -183,20 +183,20 @@ node.next = intersection;
 
 // list2.printValue();
 
-// function findCommon (head1, head2) {
-//     while (head2) {
-//         let temp = head1;
-//         while (temp) {
-//             // console.log(head1)
-//             if (temp == head2) {
-//                 return head2;
-//             }
-//             temp = temp.next;
-//         }
-//         head2 = head2.next;
-//     };
-//     return null;
-// }
+function findCommon (head1, head2) {
+    while (head2) {
+        let temp = head1;
+        while (temp) {
+            // console.log(head1)
+            if (temp == head2) {
+                return head2;
+            }
+            temp = temp.next;
+        }
+        head2 = head2.next;
+    };
+    return null;
+}
 
 // function findCommon (list1, list2) {
 //     for (let i = 0; i < list2.size; i++) {
@@ -210,26 +210,26 @@ node.next = intersection;
 //     return 'not found'
 // };
 
-// function findCommon (headA, headB) {
-//     if (headA === null || headB === null) return null;
-//     let aPointer = headA;
-//     let bPointer = headB;
-//     while (aPointer !== bPointer) {
-//         if (aPointer === null) {
-//             aPointer = headB;
-//         } else {
-//             aPointer = aPointer.next
-//         }
-//         if (bPointer === null) {
-//             bPointer = headA;
-//         } else {
-//             bPointer = bPointer.next
-//         }
-//     }
-//     return aPointer;
-// }
+function findCommon (headA, headB) {
+    if (headA === null || headB === null) return null;
+    let aPointer = headA;
+    let bPointer = headB;
+    while (aPointer !== bPointer) {
+        if (aPointer === null) {
+            aPointer = headB;
+        } else {
+            aPointer = aPointer.next
+        }
+        if (bPointer === null) {
+            bPointer = headA;
+        } else {
+            bPointer = bPointer.next
+        }
+    }
+    return aPointer;
+}
 
-// console.log(findCommon(list1.head, list2.head))
+console.log(findCommon(list1.head, list2.head))
 
 // console.log(list1.head.value, list2.head.value)
 // console.log(list1.head.value == list2.head.value)

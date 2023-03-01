@@ -177,7 +177,7 @@ function missingValueInArrya(arr = []) {
 //     console.log(ans)
 // }
 
-missingValueInArrya([1, 2, 3, 5, 6, 8, 10])
+// missingValueInArrya([1, 2, 3, 5, 6, 8, 10])
 
 function findPair (arr, sum) {
     let result = []
@@ -259,4 +259,28 @@ function stringSol (s) {
     console.log(num, str)
 }
 
-stringSol('a2b4c10d8');
+// stringSol('a2b4c10d8');
+
+const findMedian = (num1, num2) => {
+    let mArr = [...num1, ...num2];
+    mArr = mArr.sort((a, b) => a - b);
+    let median = 0;
+    if (mArr.length % 2 === 0) {
+        // console.log(mArr[mArr.length /2 - 1])
+        // console.log(mArr[1])
+        median = (mArr[(mArr.length / 2)] + mArr[mArr.length / 2 - 1])  / 2
+        // console.log(median)
+    } else {
+        median = mArr[Math.floor(mArr.length / 2)]
+    }
+    return median;
+}
+
+// console.log(findMedian([1, 3], [2]));
+function add (a, b, sum) {
+    sum(a, b)
+}
+
+add(2, 3, function (a, b) {
+    console.log(a + b)
+})
