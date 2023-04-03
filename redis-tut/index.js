@@ -1,9 +1,24 @@
 const express = require('express');
 const app = express();
-const {Product, Cart} = require('./models');
+const {sequelize, Product, Cart} = require('./models');
 const client = require("./redis-config");
 
 app.use(express.json());
+
+app.post('/addProducts', async (req, res) => {
+    try {
+        for (let i = 0; i < 10000; i++) {
+            await Product.create({
+                productName: `product${i}`,
+                productDesc: `awesome products product${i}`
+            })
+        }
+        return res.send('inserting data')
+    } catch (e) {
+        console.log(e);
+        return res.send('got error while inserting data')
+    }
+})
 
 app.get('/products', async (req, res) => {
     try {

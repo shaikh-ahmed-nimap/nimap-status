@@ -3,7 +3,7 @@ class CustomError extends Error {
         super(message)
         this.name = name;
         this.status = status;
-    }
+    };
 }
 
 module.exports = CustomError;

@@ -94,5 +94,40 @@ const video = {
 
 // video.show();
 
-let t = new Date()
-console.log(t.constructor)
+// const sooor =  () => {
+//     const a = 0;
+//     let b = 50;
+//     return function username () {
+//         console.log(a);
+//         console.log(b);
+//         d = 5000
+//     };
+// }
+
+// function sooor(a, b) {
+//     return function () {
+//         console.log(a , b);
+//     }
+//
+// const username = sooor(2, 3);
+// username();
+
+// let user = 'username';
+// user ||= "user2";
+// console.log(user);
+
+function fib(num) {
+    if (num < 2) {
+        return num
+    }
+    return fib(num - 1) + fib(num - 2)
+}
+
+function printFib(num) {
+    for (let i = 0; i <= num; i++) {
+        console.log(fib(i))
+    }
+};
+
+printFib(1)
+

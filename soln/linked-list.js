@@ -168,10 +168,10 @@ class LinkedList {
 const list1 = new LinkedList();
 list1.insertLast(4)
 list1.insertLast(5)
-const intersection = list1.insertLast(6)
+list1.insertLast(6)
 list1.insertLast(7)
 list1.insertLast(8)
-list1.insertLast(9)
+const intersection = list1.insertLast(9)
 // list1.printValue();
 
 const list2 = new LinkedList();
@@ -201,7 +201,9 @@ function findCommon (head1, head2) {
 // function findCommon (list1, list2) {
 //     for (let i = 0; i < list2.size; i++) {
 //         for (let j = 0; j < list1.size; j++) {
+//             console.log(list1.size, list2.size)
 //             if (list2.getAt(i) == list1.getAt(j)) {
+                
 //                 return list2.getAt(i)
 //             }
 //             else continue;
@@ -233,5 +235,26 @@ console.log(findCommon(list1.head, list2.head))
 
 // console.log(list1.head.value, list2.head.value)
 // console.log(list1.head.value == list2.head.value)
+
+function* loopLL(curr) {
+    while(curr) {
+        yield curr.value;
+        curr = curr.next;
+    }
+};
+
+const loop = loopLL(list1.head);
+
+console.log(loop.next().value);
+console.log(loop.next().value);
+console.log(loop.next().value);
+console.log(loop.next().value);
+console.log(loop.next().value);
+console.log(loop.next().value);
+console.log(loop.next().value);
+console.log(loop.next().value);
+console.log(loop.next().value);
+console.log(loop.next().value);
+
 
 
